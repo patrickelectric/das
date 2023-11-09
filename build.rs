@@ -5,7 +5,6 @@ fn main() {
         .git_commit_date()
         .git_describe(true, true, None)
         .git_sha(true)
-        .idempotent()
         .all_build()
         .emit()
         .expect("Unable to generate the cargo keys!");
