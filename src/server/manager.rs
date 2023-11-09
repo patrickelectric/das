@@ -17,6 +17,8 @@ pub async fn run(server_address: &str) -> Result<(), std::io::Error> {
 
     HttpServer::new(move || {
         let vehicle_service = vehicle::register_endpoints(web::scope("/vehicle"));
+        // TODO: Do not use vehicle, dah
+        let plugins_service = vehicle::register_endpoints(web::scope("/plugins"));
 
         App::new()
             .wrap(actix_web::middleware::Logger::default())
@@ -39,6 +41,7 @@ pub async fn run(server_address: &str) -> Result<(), std::io::Error> {
             .app_data(web::JsonConfig::default().error_handler(json_error_handler))
             .route("/", web::get().to(pages::root))
             .service(vehicle_service)
+            .service(plugins_service)
             .build()
     })
     .bind(server_address)
