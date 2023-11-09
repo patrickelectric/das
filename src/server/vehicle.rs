@@ -1,9 +1,13 @@
 use actix_web::{HttpRequest, HttpResponse};
 use paperclip::actix::{api_v2_operation, web, web::Scope};
+use super::logs;
 
 pub fn register_endpoints(scope: Scope) -> Scope {
+    let log_service = logs::register_endpoints(web::scope("/logs"));
+
     scope
-    .route("/id", web::get().to(root))
+        .service(log_service)
+        .route("/", web::get().to(root))
         .route("/id", web::get().to(id))
         // TODO: Break arm to receive parameters
         .route("/arm", web::post().to(arm))
