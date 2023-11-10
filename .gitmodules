@@ -1,0 +1,3 @@
+[submodule "libs/rhai"]
+	path = libs/rhai
+	url = https://github.com/rhaiscript/rhai
